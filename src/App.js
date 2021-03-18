@@ -1,5 +1,5 @@
 import Navbar from './components/navbar'
-import Rotas from './rotas'
+import Routes from './routes'
 
 
 function App() {
@@ -7,7 +7,7 @@ function App() {
       <>
         <div className="container">
           <Navbar />
-          <Rotas />
+          <Routes />
         </div>
       </>
   );
