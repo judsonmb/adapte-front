@@ -1,10 +1,27 @@
 import React from "react";
 
+import ExecuteLogin from '../logic/login';
+
 class Login extends React.Component{
-    
+
     state = {
         email: '',
         password: ''
+    }
+
+    onChange = (event) => {
+        const value = event.target.value
+        const fieldName = event.target.name
+        this.setState({ [fieldName]: value })
+    }
+    
+    executeLogin = (event) => {
+        const credentials = {
+            email: this.state.email,
+            password: this.state.password
+        } 
+
+        ExecuteLogin(credentials)
     }
     
     render(){
@@ -25,7 +42,7 @@ class Login extends React.Component{
                                         <div className="col-md-12">
                                             <div className="form-group">
                                                 <label>E-mail*</label>
-                                                <input type="text" name="email" className="form-control" value={this.state.email} required></input> 
+                                                <input type="text" name="email" className="form-control" value={this.state.email} onChange={this.onChange} required></input> 
                                             </div>
                                         </div>
                                     </div>
@@ -33,13 +50,13 @@ class Login extends React.Component{
                                         <div className="col-md-12">
                                             <div className="form-group">
                                                 <label>Senha*</label>
-                                                <input type="password" name="password" className="form-control" value={this.state.password} required></input> 
+                                                <input type="password" name="password" className="form-control" value={this.state.password} onChange={this.onChange} required></input> 
                                             </div>
                                         </div>
                                     </div>
                                     <div className="row">
                                         <div className="col-md-1">
-                                        <button className="btn btn-success">Logar</button>
+                                        <button className="btn btn-success" onClick={this.executeLogin}>Logar</button>
                                         </div>
                                     </div>
                                 </div>

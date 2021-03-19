@@ -19,7 +19,7 @@ class CadastroUsuario extends React.Component{
         console.log(this.state)
     }
 
-    clearFields = (events) => {
+    clearFields = () => {
         this.setState({ 
             name: '',
             email: '',
