@@ -1,5 +1,7 @@
 import React from "react";
 
+import { CreateUser } from '../../logic/users';
+
 class CadastroUsuario extends React.Component{
 
     state = {
@@ -15,8 +17,15 @@ class CadastroUsuario extends React.Component{
         this.setState({ [fieldName]: value })
     }
 
-    onSubmit = (event) => {
-        console.log(this.state)
+    onSubmit = () => {
+        const form = {
+            name: this.state.name,
+            email: this.state.email,
+            password: this.state.password,
+            c_password: this.state.c_password
+        } 
+
+        CreateUser(form)
     }
 
     clearFields = () => {

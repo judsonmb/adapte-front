@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-d
 import Login from './views/login'
 import Logoff from './logic/logoff'
 import Home from './views/home'
-import CadastroUsuario from './views/usuarios/cadastro'
+import CadastroUsuario from './views/users/create'
 
 export default () => {
     return (

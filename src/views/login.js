@@ -6,7 +6,8 @@ class Login extends React.Component{
 
     state = {
         email: '',
-        password: ''
+        password: '',
+        errorMessage: ''
     }
 
     onChange = (event) => {
@@ -15,13 +16,13 @@ class Login extends React.Component{
         this.setState({ [fieldName]: value })
     }
     
-    executeLogin = (event) => {
+    executeLogin = async () => {
         const credentials = {
             email: this.state.email,
             password: this.state.password
         } 
 
-        ExecuteLogin(credentials)
+        this.setState({ errorMessage: await ExecuteLogin(credentials)})
     }
     
     render(){
@@ -32,8 +33,16 @@ class Login extends React.Component{
                 <hr className="my-4"/>
                 <div className="container">
                     <div className="row">
-                        <div className="col-md-4">
+                        <div className="col-md-12">
                             <div className="card" >
+                               
+                                {this.state.errorMessage != '' &&
+                                    <div class="alert alert-dismissible alert-danger">
+                                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                        <strong>{this.state.errorMessage}</strong>
+                                    </div>
+                                }
+
                                 <div className="card-header">
                                     Login
                                 </div>
@@ -56,7 +65,7 @@ class Login extends React.Component{
                                     </div>
                                     <div className="row">
                                         <div className="col-md-1">
-                                        <button className="btn btn-success" onClick={this.executeLogin}>Logar</button>
+                                            <button type="submit" className="btn btn-success" onClick={this.executeLogin}>Logar</button>
                                         </div>
                                     </div>
                                 </div>
