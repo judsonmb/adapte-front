@@ -22,7 +22,7 @@ export default async (credentials) => {
                 }else if(err.response.status === 401){
                     responseMessage = 'E-mail e senha não conferem.'
                 }else if(err.response.status === 500){
-                    responseMessage = 'Erro interno no servidor. Por favor, contate o suporte.'
+                    responseMessage = err.response.data.message
                 }
             }else{
                 responseMessage = 'Sistema fora do ar. Por favor, contate o suporte.'

@@ -18,7 +18,7 @@ export async function CreateUser(form) {
         )
         .then(res => {
             response.success = true;
-            response.message = 'Usuário cadastrado com sucesso!!';
+            response.message = res.response.data.message;
         })
         .catch(err => {
             if(err.response){
@@ -36,12 +36,14 @@ export async function CreateUser(form) {
                         response.message += err.response.data.errors.c_password[0] + ' '
                     }
                 }else if(err.response.status === 500){
-                    response.message = 'Erro interno no servidor. Por favor, contate o suporte.'
+                    response.message = err.response.data.message
                 }
             }else{
                 response.message = 'Sistema fora do ar. Por favor, contate o suporte.'
             }
         })
+
+    console.log('response: ', response)
     
     return response
 }
