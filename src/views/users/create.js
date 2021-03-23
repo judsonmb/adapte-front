@@ -8,7 +8,8 @@ class CadastroUsuario extends React.Component{
         name : '',
         email: '',
         password: '',
-        c_password: ''
+        c_password: '',
+        logicResponse: undefined
     }
 
     onChange = (event) => {
@@ -17,7 +18,7 @@ class CadastroUsuario extends React.Component{
         this.setState({ [fieldName]: value })
     }
 
-    onSubmit = () => {
+    onSubmit = async () => {
         const form = {
             name: this.state.name,
             email: this.state.email,
@@ -25,7 +26,7 @@ class CadastroUsuario extends React.Component{
             c_password: this.state.c_password
         } 
 
-        CreateUser(form)
+        this.setState({ logicResponse: await CreateUser(form)})
     }
 
     clearFields = () => {
@@ -40,6 +41,21 @@ class CadastroUsuario extends React.Component{
     render(){
         return(
             <div className="card">
+                
+                {this.state.logicResponse !== undefined && !this.state.logicResponse.success &&
+                    <div className="alert alert-dismissible alert-danger">
+                        <button type="button" className="close" data-dismiss="alert">&times;</button>
+                        <strong>{this.state.logicResponse.message}</strong>
+                    </div>
+                }
+
+                {this.state.logicResponse !== undefined && this.state.logicResponse.success &&
+                    <div className="alert alert-dismissible alert-success">
+                        <button type="button" className="close" data-dismiss="alert">&times;</button>
+                        <strong>{this.state.logicResponse.message}</strong>
+                    </div>
+                }
+
                 <div className="card-header">
                     Cadastro de Usuário
                 </div>

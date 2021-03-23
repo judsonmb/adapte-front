@@ -36,9 +36,9 @@ class Login extends React.Component{
                         <div className="col-md-12">
                             <div className="card" >
                                
-                                {this.state.errorMessage != '' &&
-                                    <div class="alert alert-dismissible alert-danger">
-                                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                {this.state.errorMessage !== '' &&
+                                    <div className="alert alert-dismissible alert-danger">
+                                        <button type="button" className="close" data-dismiss="alert">&times;</button>
                                         <strong>{this.state.errorMessage}</strong>
                                     </div>
                                 }
