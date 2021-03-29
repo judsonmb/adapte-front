@@ -18,7 +18,7 @@ class CreateUser extends React.Component{
         this.setState({ [fieldName]: value })
     }
 
-    onSubmit = async () => {
+    async onSubmit() {
         const form = {
             name: this.state.name,
             email: this.state.email,

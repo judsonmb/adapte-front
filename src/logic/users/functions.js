@@ -1,5 +1,37 @@
 import axios from 'axios';
 
+export async function GetUsersList() {
+
+    let config = {
+        headers: { Authorization: 'Bearer ' + localStorage.getItem('USER_TOKEN') }
+    }
+
+    let response = {
+        success: false,
+        message: '',
+        data: undefined
+    }
+    
+    await axios.get(
+            `http://localhost:8000/api/users`,
+            config
+        )
+        .then(res => {
+            response.success = true;
+            response.message = res.data.message;
+            response.data = res.data.data;
+        })
+        .catch(err => {
+            if(err.response){
+                if(err.response.status === 500){
+                    response.message = err.response.data.message
+                }
+            }
+        })
+        
+    return response
+}
+
 export async function Create(form) {
 
     let config = {
