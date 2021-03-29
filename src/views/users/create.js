@@ -1,8 +1,8 @@
 import React from "react";
 
-import { CreateUser } from '../../logic/users';
+import { Create } from '../../logic/users/functions';
 
-class CadastroUsuario extends React.Component{
+class CreateUser extends React.Component{
 
     state = {
         name : '',
@@ -26,7 +26,7 @@ class CadastroUsuario extends React.Component{
             c_password: this.state.c_password
         } 
 
-        this.setState({ logicResponse: await CreateUser(form)})
+        this.setState({ logicResponse: await Create(form)})
     }
 
     clearFields = () => {
@@ -103,4 +103,4 @@ class CadastroUsuario extends React.Component{
 
 }
 
-export default CadastroUsuario
+export default CreateUser

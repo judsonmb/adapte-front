@@ -7,8 +7,7 @@ export default async (credentials) => {
         .then(res => {
             localStorage.setItem('USER_TOKEN', res.data.data.token)
             localStorage.setItem('USER_NAME', res.data.data.name)
-            console.log(localStorage.getItem('USER_NAME'))
-            window.location.href = "/home";
+            window.location.href = "/home"
         })
         .catch(err => {
             if(err.response){
@@ -21,8 +20,8 @@ export default async (credentials) => {
                     }
                 }else if(err.response.status === 401){
                     responseMessage = 'E-mail e senha não conferem.'
-                }else if(err.response.status === 500){
-                    responseMessage = err.response.data.message
+                }else if(err.response.status === 500 || err.response.status === 404){
+                    responseMessage = 'Ocorreu um problema interno no servidor. Por favor, contate o suporte.'
                 }
             }else{
                 responseMessage = 'Sistema fora do ar. Por favor, contate o suporte.'

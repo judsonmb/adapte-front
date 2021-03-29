@@ -1,9 +1,9 @@
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 
-import Login from './views/login'
-import Logoff from './logic/logoff'
+import Login from './views/auth/login'
+import Logoff from './logic/auth/logoff'
 import Home from './views/home'
-import CadastroUsuario from './views/users/create'
+import CreateUser from './views/users/create'
 
 export default () => {
     return (
@@ -19,8 +19,8 @@ export default () => {
                     {localStorage.getItem('USER_TOKEN') ? <Home /> : <Login />}
                 </Route>
 
-                <Route exact path="/usuarios/cadastro" component={CadastroUsuario} >
-                    {localStorage.getItem('USER_TOKEN') ? <CadastroUsuario /> : <Login />}
+                <Route exact path="/usuarios/cadastro" component={CreateUser} >
+                    {localStorage.getItem('USER_TOKEN') ? <CreateUser /> : <Login />}
                 </Route>
             </Switch>
         </Router>

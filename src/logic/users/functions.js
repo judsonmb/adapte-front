@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export async function CreateUser(form) {
+export async function Create(form) {
 
     let config = {
         headers: { Authorization: 'Bearer ' + localStorage.getItem('USER_TOKEN') }
@@ -18,7 +18,7 @@ export async function CreateUser(form) {
         )
         .then(res => {
             response.success = true;
-            response.message = res.response.data.message;
+            response.message = res.data.message;
         })
         .catch(err => {
             if(err.response){
@@ -38,12 +38,8 @@ export async function CreateUser(form) {
                 }else if(err.response.status === 500){
                     response.message = err.response.data.message
                 }
-            }else{
-                response.message = 'Sistema fora do ar. Por favor, contate o suporte.'
             }
         })
-
-    console.log('response: ', response)
     
     return response
 }

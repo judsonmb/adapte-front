@@ -1,6 +1,6 @@
 import React from "react";
 
-import ExecuteLogin from '../logic/login';
+import ExecuteLogin from '../../logic/auth/login';
 
 class Login extends React.Component{
 
@@ -28,7 +28,7 @@ class Login extends React.Component{
     render(){
         return (
             <div className="jumbotron">
-                <h1 className="display-3">Seja Bem vindo ao Adapt-e!</h1>
+                <h1 className="display-4">Seja Bem vindo ao Adapt-e!</h1>
                 <p className="lead">O adapt-e é um software onde alunos aprendem de forma personalizada.</p>
                 <hr className="my-4"/>
                 <div className="container">
