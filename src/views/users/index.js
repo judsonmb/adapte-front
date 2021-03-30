@@ -5,7 +5,7 @@ import axios from 'axios';
 class Index extends React.Component{
 
     state = {
-        logicResponse : undefined
+        apiResponse : undefined
     }
 
     componentDidMount() {
@@ -19,8 +19,7 @@ class Index extends React.Component{
             config
         )
         .then(res => {
-            this.setState({ logicResponse : res.data })
-            console.log('did mount: ' , this.state.logicResponse)
+            this.setState({ apiResponse : res.data })
         })
         .catch(err => {
             if(err.response){
@@ -33,7 +32,7 @@ class Index extends React.Component{
     }
 
     render(){
-        if(this.state.logicResponse === undefined){
+        if(this.state.apiResponse === undefined){
             
             return(
                 <div>
@@ -55,7 +54,7 @@ class Index extends React.Component{
                         Home / Usuários
                     </div>
                     <div className="card-body">
-                        <a href="/usuarios/cadastrar/"><button type="button" class="btn btn-success">Cadastrar</button></a>
+                        <a href="/usuarios/cadastrar/"><button type="button" className="btn btn-success">Cadastrar</button></a>
                         <table className="table table-hover">
                             <thead>
                                 <tr>
@@ -66,7 +65,7 @@ class Index extends React.Component{
                             </thead>
                             <tbody>
                                 {    
-                                   this.state.logicResponse.data.map((user) => {
+                                   this.state.apiResponse.data.map((user) => {
                                     return (
                                             <tr>
                                                 <td>{user.name}</td>

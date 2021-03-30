@@ -1,6 +1,6 @@
 import React from "react";
+import axios from 'axios';
 
-import { Create } from '../../logic/users/functions';
 
 class CreateUser extends React.Component{
 
@@ -9,7 +9,7 @@ class CreateUser extends React.Component{
         email: '',
         password: '',
         c_password: '',
-        logicResponse: undefined
+        apiResponse: undefined
     }
 
     onChange = (event) => {
@@ -18,7 +18,8 @@ class CreateUser extends React.Component{
         this.setState({ [fieldName]: value })
     }
 
-    async onSubmit() {
+    onSubmit = async () => {
+
         const form = {
             name: this.state.name,
             email: this.state.email,
@@ -26,7 +27,48 @@ class CreateUser extends React.Component{
             c_password: this.state.c_password
         } 
 
-        this.setState({ logicResponse: await Create(form)})
+        console.log(form)
+
+        let config = {
+            headers: { Authorization: 'Bearer ' + localStorage.getItem('USER_TOKEN') }
+        }
+    
+        let response = {
+            success: false,
+            message: ''
+        }
+        
+        await axios.post(
+                `http://localhost:8000/api/users`, 
+                form,
+                config
+            )
+            .then(res => {
+                response.success = true;
+                response.message = res.data.message;
+            })
+            .catch(err => {
+                if(err.response){
+                    if(err.response.status === 422){
+                        if(err.response.data.errors.name){
+                            response.message += err.response.data.errors.name[0] + ' '
+                        }
+                        if(err.response.data.errors.email){
+                            response.message += err.response.data.errors.email[0] + ' '
+                        }
+                        if(err.response.data.errors.password){
+                            response.message += err.response.data.errors.password[0] + ' '
+                        }
+                        if(err.response.data.errors.c_password){
+                            response.message += err.response.data.errors.c_password[0] + ' '
+                        }
+                    }else if(err.response.status === 500){
+                        response.message = err.response.data.message
+                    }
+                }
+            })
+        
+        this.setState({ apiResponse: response })
     }
 
     clearFields = () => {
@@ -42,17 +84,17 @@ class CreateUser extends React.Component{
         return(
             <div className="card">
                 
-                {this.state.logicResponse !== undefined && !this.state.logicResponse.success &&
+                {this.state.apiResponse !== undefined && !this.state.apiResponse.success &&
                     <div className="alert alert-dismissible alert-danger">
                         <button type="button" className="close" data-dismiss="alert">&times;</button>
-                        <strong>{this.state.logicResponse.message}</strong>
+                        <strong>{this.state.apiResponse.message}</strong>
                     </div>
                 }
 
-                {this.state.logicResponse !== undefined && this.state.logicResponse.success &&
+                {this.state.apiResponse !== undefined && this.state.apiResponse.success &&
                     <div className="alert alert-dismissible alert-success">
                         <button type="button" className="close" data-dismiss="alert">&times;</button>
-                        <strong>{this.state.logicResponse.message}</strong>
+                        <strong>{this.state.apiResponse.message}</strong>
                     </div>
                 }
 
