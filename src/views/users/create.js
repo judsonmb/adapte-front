@@ -27,8 +27,6 @@ class CreateUser extends React.Component{
             c_password: this.state.c_password
         } 
 
-        console.log(form)
-
         let config = {
             headers: { Authorization: 'Bearer ' + localStorage.getItem('USER_TOKEN') }
         }
