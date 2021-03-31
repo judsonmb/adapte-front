@@ -1,13 +1,13 @@
 import React from "react";
+import axios from 'axios';
 
-import ExecuteLogin from '../../logic/auth/login';
 
 class Login extends React.Component{
 
     state = {
         email: '',
         password: '',
-        errorMessage: ''
+        apiResponse: ''
     }
 
     onChange = (event) => {
@@ -17,12 +17,46 @@ class Login extends React.Component{
     }
     
     executeLogin = async () => {
+
+        let apiResponse = '';
+        
         const credentials = {
             email: this.state.email,
             password: this.state.password
         } 
 
-        this.setState({ errorMessage: await ExecuteLogin(credentials)})
+        const headers = {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    
+        await axios.post(`http://localhost:8000/api/login`, credentials, {
+                headers: headers
+            })
+            .then(res => {
+                localStorage.setItem('USER_TOKEN', res.data.data.token)
+                localStorage.setItem('USER_NAME', res.data.data.name)
+                window.location.pathname = "/home"
+                window.location.href = "/home"
+            })
+            .catch(err => {
+                if(err.response){
+                    if(err.response.status === 422){
+                        if(err.response.data.message.email){
+                            apiResponse += err.response.data.message.email[0] + ' '
+                        }
+                        if(err.response.data.message.password){
+                            apiResponse += err.response.data.message.password[0] + ' '
+                        }
+                    }else{
+                        apiResponse = err.response.data.message
+                    }
+                }else{
+                    apiResponse = 'Sistema fora do ar. Por favor, contate o suporte.'
+                }
+            })
+
+        this.setState({ apiResponse })
     }
     
     render(){
@@ -36,10 +70,10 @@ class Login extends React.Component{
                         <div className="col-md-12">
                             <div className="card" >
                                
-                                {this.state.errorMessage !== '' &&
+                                {this.state.apiResponse !== '' &&
                                     <div className="alert alert-dismissible alert-danger">
                                         <button type="button" className="close" data-dismiss="alert">&times;</button>
-                                        <strong>{this.state.errorMessage}</strong>
+                                        <strong>{this.state.apiResponse}</strong>
                                     </div>
                                 }
 

@@ -1,13 +1,13 @@
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 
-import Login from './views/auth/login'
+import Login from './pages/auth/login'
 import Logoff from './logic/auth/logoff'
-import Home from './views/home'
-import Index from './views/users/'
-import CreateUser from './views/users/create'
+import Home from './pages/home'
+import Index from './pages/users/'
+import CreateUser from './pages/users/create'
 
 
-export default () => {
+const routes = () =>  {
     return (
         <Router>
             <Switch>
@@ -32,3 +32,5 @@ export default () => {
         </Router>
     )
 }
+
+export default routes;

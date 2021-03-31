@@ -10,14 +10,16 @@ class Index extends React.Component{
 
     componentDidMount(){
 
-        let config = {
-            headers: { Authorization: 'Bearer ' + localStorage.getItem('USER_TOKEN') }
-        }
+        const headers = {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization' : 'Bearer ' + localStorage.getItem('USER_TOKEN')
+          }
 
         axios.get(
-            `http://localhost:8000/api/users`,
-            config
-        )
+            `http://localhost:8000/api/users`, {
+                headers: headers
+        })
         .then(res => {
             this.setState({ apiResponse : res.data })
         })
@@ -74,7 +76,7 @@ class Index extends React.Component{
                                         (this.state.apiResponse.data &&
                                             this.state.apiResponse.data.map((user) => {
                                                 return (
-                                                        <tr>
+                                                        <tr key={user.id}>
                                                             <td>{user.name}</td>
                                                             <td>{user.email}</td>
                                                             <td>

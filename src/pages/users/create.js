@@ -48,17 +48,17 @@ class CreateUser extends React.Component{
             .catch(err => {
                 if(err.response){
                     if(err.response.status === 422){
-                        if(err.response.data.errors.name){
-                            response.message += err.response.data.errors.name[0] + ' '
+                        if(err.response.data.message.name){
+                            response.message += err.response.data.message.name[0] + ' '
                         }
-                        if(err.response.data.errors.email){
-                            response.message += err.response.data.errors.email[0] + ' '
+                        if(err.response.data.message.email){
+                            response.message += err.response.data.message.email[0] + ' '
                         }
-                        if(err.response.data.errors.password){
-                            response.message += err.response.data.errors.password[0] + ' '
+                        if(err.response.data.message.password){
+                            response.message += err.response.data.message.password[0] + ' '
                         }
-                        if(err.response.data.errors.c_password){
-                            response.message += err.response.data.errors.c_password[0] + ' '
+                        if(err.response.data.message.c_password){
+                            response.message += err.response.data.message.c_password[0] + ' '
                         }
                     }else if(err.response.status === 500){
                         response.message = err.response.data.message

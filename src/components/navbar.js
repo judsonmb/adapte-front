@@ -9,29 +9,26 @@ function Navbar(){
     
                 <div className="collapse navbar-collapse" id="navbarColor01">
                     <ul className="navbar-nav mr-auto">
-                        <li className="nav-item active">
-                            <a className="nav-link" href="/home">Home
-                                <span className="sr-only">(current)</span>
-                            </a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="/usuarios">Usuários</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">Cursos</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">Turmas</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">Módulos</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">Assuntos</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">Tópicos</a>
-                        </li>
+                        {
+                            (window.location.pathname === '/home') ?
+                                <li className="nav-item active">
+                                    <a className="nav-link" href="/home">Home</a>
+                                </li>
+                                :
+                                <li className="nav-item">
+                                    <a className="nav-link" href="/home">Home</a>
+                                </li>
+                        }
+                        {
+                            (window.location.pathname === '/usuarios') ?
+                                <li className="nav-item active">
+                                    <a className="nav-link" href="/usuarios">Usuários</a>
+                                </li>
+                                :
+                                <li className="nav-item">
+                                    <a className="nav-link" href="/usuarios">Usuários</a>
+                                </li>
+                        }
                     </ul>
                     <ul className="navbar-nav">
                         <li className="nav-item">
