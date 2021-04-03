@@ -5,7 +5,7 @@ import Logoff from './logic/auth/logoff'
 import Home from './pages/home'
 import Index from './pages/users/'
 import CreateUser from './pages/users/create'
-
+import UpdateUser from './pages/users/update'
 
 const routes = () =>  {
     return (
@@ -27,6 +27,10 @@ const routes = () =>  {
 
                 <Route exact path="/usuarios/cadastrar">
                     {localStorage.getItem('USER_TOKEN') ? <CreateUser /> : <Login />}
+                </Route>
+
+                <Route exact path="/usuarios/editar">
+                    {localStorage.getItem('USER_TOKEN') ? <UpdateUser /> : <Login />}
                 </Route>
             </Switch>
         </Router>

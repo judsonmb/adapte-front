@@ -30,6 +30,11 @@ class Index extends React.Component{
         })
     }
 
+    goToUpdatePage(id){
+        localStorage.setItem('SELECTED_USER', id)
+        window.location.href = "/usuarios/editar"
+    }
+
     render(){
 
         if(this.state.apiResponse === undefined){
@@ -76,15 +81,15 @@ class Index extends React.Component{
                                         (this.state.apiResponse.data &&
                                             this.state.apiResponse.data.map((user) => {
                                                 return (
-                                                        <tr key={user.id}>
-                                                            <td>{user.name}</td>
-                                                            <td>{user.email}</td>
-                                                            <td>
-                                                                <button type="button" className="btn btn-warning">Editar</button>
-                                                                <button type="button" className="btn btn-danger">Excluir</button>
-                                                            </td>
-                                                        </tr>
-                                                    )
+                                                    <tr key={user.id}>
+                                                        <td>{user.name}</td>
+                                                        <td>{user.email}</td>
+                                                        <td>
+                                                            <button type="button" onClick={() => this.goToUpdatePage(user.id)} className="btn btn-warning disabled">Editar</button>
+                                                            <button type="button" className="btn btn-danger">Excluir</button>
+                                                        </td>
+                                                    </tr>
+                                                 )
                                             })
                                         ) 
                                     }
