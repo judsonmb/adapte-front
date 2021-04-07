@@ -17,7 +17,7 @@ class Index extends React.Component{
           }
 
         axios.get(
-            `http://localhost:8000/api/users`, {
+            `http://localhost:8003/api/users`, {
                 headers: headers
         })
         .then(res => {

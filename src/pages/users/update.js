@@ -19,7 +19,7 @@ class UpdateUser extends React.Component{
           }
 
         axios.get(
-            `http://localhost:8000/api/users/`+localStorage.getItem('SELECTED_USER')+`/edit`, {
+            `http://localhost:8003/api/users/`+localStorage.getItem('SELECTED_USER')+`/edit`, {
                 headers: headers
         })
         .then(res => {
@@ -53,7 +53,7 @@ class UpdateUser extends React.Component{
         }
 
         await axios.put(
-            `http://localhost:8000/api/users/`+localStorage.getItem('SELECTED_USER'), form, {
+            `http://localhost:8003/api/users/`+localStorage.getItem('SELECTED_USER'), form, {
                 headers: headers
             })
             .then(res => {
