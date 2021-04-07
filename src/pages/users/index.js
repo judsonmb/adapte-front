@@ -5,7 +5,8 @@ import axios from 'axios';
 class Index extends React.Component{
 
     state = {
-        apiResponse : undefined
+        getResponse : undefined,
+        removeResponse : undefined
     }
 
     componentDidMount(){
@@ -17,15 +18,15 @@ class Index extends React.Component{
           }
 
         axios.get(
-            `http://localhost:8003/api/users`, {
+            `http://localhost:8000/api/users`, {
                 headers: headers
         })
         .then(res => {
-            this.setState({ apiResponse : res.data })
+            this.setState({ getResponse : res.data })
         })
         .catch(err => {
             if(err.response){
-                this.setState({ apiResponse : err.response.data })
+                this.setState({ getResponse : err.response.data })
             }
         })
     }
@@ -35,9 +36,37 @@ class Index extends React.Component{
         window.location.href = "/usuarios/editar"
     }
 
+    removeUser = async (id) => {
+        
+        const headers = {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization' : 'Bearer ' + localStorage.getItem('USER_TOKEN')
+        }
+    
+        let response = {
+            success: false,
+            message: ''
+        }
+
+        await axios.delete(
+            `http://localhost:8000/api/users/`+id, {
+                headers: headers
+            })
+            .then(res => {
+                response.success = true
+                response.message = res.data.message
+                this.componentDidMount()
+            })
+            .catch(err => {
+                response.message = err.data.message
+            })
+            this.setState({ removeResponse : response })
+    }
+
     render(){
 
-        if(this.state.apiResponse === undefined){
+        if(this.state.getResponse === undefined){
             return(
                 <div>
                     <div className="card">
@@ -54,12 +83,20 @@ class Index extends React.Component{
             return(
                 <div>
                     {   
-                        (this.state.apiResponse.message) &&
-                            <div class="alert alert-dismissible alert-danger">
-                                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                    <strong>{this.state.apiResponse.message}</strong>
+                        (this.state.removeResponse !== undefined && this.state.removeResponse.message && !this.state.removeResponse.success) &&
+                            <div className="alert alert-dismissible alert-danger">
+                                <button type="button" className="close" data-dismiss="alert">&times;</button>
+                                    <strong>{this.state.removeResponse.message}</strong>
                             </div>
-                        }
+                    }
+
+                    {   
+                        (this.state.removeResponse !== undefined && this.state.removeResponse.message && this.state.removeResponse.success) &&
+                            <div className="alert alert-dismissible alert-success">
+                                <button type="button" className="close" data-dismiss="alert">&times;</button>
+                                    <strong>{this.state.removeResponse.message}</strong>
+                            </div>
+                    }
                     <div className="card">
                         <div className="card-header">
                             Usuários
@@ -78,15 +115,15 @@ class Index extends React.Component{
                                 </thead>
                                 <tbody>
                                     {   
-                                        (this.state.apiResponse.data &&
-                                            this.state.apiResponse.data.map((user) => {
+                                        (this.state.getResponse.data &&
+                                            this.state.getResponse.data.map((user) => {
                                                 return (
                                                     <tr key={user.id}>
                                                         <td>{user.name}</td>
                                                         <td>{user.email}</td>
                                                         <td>
                                                             <button type="button" onClick={() => this.goToUpdatePage(user.id)} className="btn btn-warning disabled">Editar</button>
-                                                            <button type="button" className="btn btn-danger">Excluir</button>
+                                                            <button type="button" onClick={() => this.removeUser(user.id)} className="btn btn-danger">Excluir</button>
                                                         </td>
                                                     </tr>
                                                  )

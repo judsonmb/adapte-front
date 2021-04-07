@@ -37,7 +37,7 @@ class CreateUser extends React.Component{
         }
         
         await axios.post(
-                `http://localhost:8003/api/users`, 
+                `http://localhost:8000/api/users`, 
                 form,
                 config
             )
