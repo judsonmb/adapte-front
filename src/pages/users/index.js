@@ -15,10 +15,10 @@ class Index extends React.Component{
             'Accept': 'application/json',
             'Content-Type': 'application/json',
             'Authorization' : 'Bearer ' + localStorage.getItem('USER_TOKEN')
-          }
+        }
 
         axios.get(
-            `http://localhost:8000/api/users`, {
+            process.env.REACT_APP_LINK_API+'/users', {
                 headers: headers
         })
         .then(res => {
@@ -50,7 +50,7 @@ class Index extends React.Component{
         }
 
         await axios.delete(
-            `http://localhost:8000/api/users/`+id, {
+            process.env.REACT_APP_LINK_API+'/users/'+id, {
                 headers: headers
             })
             .then(res => {
