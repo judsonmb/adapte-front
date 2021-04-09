@@ -123,7 +123,10 @@ class Index extends React.Component{
                                                         <td>{user.email}</td>
                                                         <td>
                                                             <button type="button" onClick={() => this.goToUpdatePage(user.id)} className="btn btn-warning disabled">Editar</button>
-                                                            <button type="button" onClick={() => this.removeUser(user.id)} className="btn btn-danger">Excluir</button>
+                                                            {
+                                                                (parseInt(localStorage.getItem('USER_ID')) !== user.id) && 
+                                                                <button type="button" onClick={() => this.removeUser(user.id)} className="btn btn-danger">Excluir</button>
+                                                            }   
                                                         </td>
                                                     </tr>
                                                  )

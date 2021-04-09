@@ -35,6 +35,7 @@ class Login extends React.Component{
             })
             .then(res => {
                 localStorage.setItem('USER_TOKEN', res.data.data.token)
+                localStorage.setItem('USER_ID', res.data.data.id)
                 localStorage.setItem('USER_NAME', res.data.data.name)
                 window.location.pathname = "/home"
                 window.location.href = "/home"
