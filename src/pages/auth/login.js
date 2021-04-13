@@ -16,7 +16,9 @@ class Login extends React.Component{
         this.setState({ [fieldName]: value })
     }
     
-    executeLogin = async () => {
+    executeLogin = async (event) => {
+
+        event.preventDefault();
 
         let apiResponse = '';
         
@@ -70,39 +72,40 @@ class Login extends React.Component{
                     <div className="row">
                         <div className="col-md-12">
                             <div className="card" >
-                               
-                                {this.state.apiResponse !== '' &&
+                                {
+                                    this.state.apiResponse !== '' &&
                                     <div className="alert alert-dismissible alert-danger">
                                         <button type="button" className="close" data-dismiss="alert">&times;</button>
                                         <strong>{this.state.apiResponse}</strong>
                                     </div>
                                 }
-
                                 <div className="card-header">
                                     Login
                                 </div>
                                 <div className="card-body">
-                                    <div className="row">
-                                        <div className="col-md-12">
-                                            <div className="form-group">
-                                                <label>E-mail*</label>
-                                                <input type="text" name="email" className="form-control" value={this.state.email} onChange={this.onChange} required></input> 
+                                    <form id="formLogin" onSubmit={this.executeLogin}>
+                                        <div className="row">
+                                            <div className="col-md-12">
+                                                <div className="form-group">
+                                                    <label>E-mail*</label>
+                                                    <input type="text" name="email" className="form-control" value={this.state.email} onChange={this.onChange} required></input> 
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-md-12">
-                                            <div className="form-group">
-                                                <label>Senha*</label>
-                                                <input type="password" name="password" className="form-control" value={this.state.password} onChange={this.onChange} required></input> 
+                                        <div className="row">
+                                            <div className="col-md-12">
+                                                <div className="form-group">
+                                                    <label>Senha*</label>
+                                                    <input type="password" name="password" className="form-control" value={this.state.password} onChange={this.onChange} required></input> 
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-md-1">
-                                            <button type="submit" className="btn btn-success" onClick={this.executeLogin}>Logar</button>
+                                        <div className="row">
+                                            <div className="col-md-1">
+                                                <button type="submit" className="btn btn-success">Logar</button>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>

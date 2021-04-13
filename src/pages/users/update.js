@@ -40,7 +40,9 @@ class UpdateUser extends React.Component{
         this.setState({ [fieldName]: value })
     }
 
-    onSubmit = async () => {
+    updateUser = async (event) => {
+
+        event.preventDefault();
 
         const form = {
             name: this.state.name,
@@ -97,34 +99,35 @@ class UpdateUser extends React.Component{
         }else{
             return(
                 <div className="card">
-
-                    {this.state.errorMessage !== undefined &&
+                    {
+                        this.state.errorMessage !== undefined &&
                         <div className="alert alert-dismissible alert-danger">
                             <button type="button" className="close" data-dismiss="alert">&times;</button>
                             <strong>{this.state.errorMessage}</strong>
                         </div>
                     }
-
                     <div className="card-header">
                         Edição do usuário {this.state.apiResponse.name}
                     </div>
                     <div className="card-body">
-                        <div className="row">
-                            <div className="col-md-12">
-                                <div className="form-group">
-                                    <label>Nome*</label>
-                                    <input type="text" name="name" className="form-control" value={this.state.name} onChange={this.onChange} required></input> 
+                        <form id="updateUserForm" onSubmit={this.updateUser}>
+                            <div className="row">
+                                <div className="col-md-12">
+                                    <div className="form-group">
+                                        <label>Nome*</label>
+                                        <input type="text" name="name" className="form-control" value={this.state.name} onChange={this.onChange} required></input> 
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-md-1">
-                            <button className="btn btn-success" onClick={this.onSubmit}>Salvar</button>
+                            <div className="row">
+                                <div className="col-md-1">
+                                    <button type="submit" className="btn btn-success">Salvar</button>
+                                </div>
+                                <div className="col-md-1">
+                                    <button className="btn btn-warning" onClick={this.clearFields}>Limpar</button> 
+                                </div>
                             </div>
-                            <div className="col-md-1">
-                                <button className="btn btn-warning" onClick={this.clearFields}>Limpar</button> 
-                            </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             )
