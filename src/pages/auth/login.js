@@ -1,5 +1,6 @@
 import React from "react";
 import axios from 'axios';
+import Card from '../../components/defaultCard';
 
 
 class Login extends React.Component{
@@ -7,7 +8,7 @@ class Login extends React.Component{
     state = {
         email: '',
         password: '',
-        apiResponse: ''
+        apiResponse: undefined
     }
 
     onChange = (event) => {
@@ -71,43 +72,38 @@ class Login extends React.Component{
                 <div className="container">
                     <div className="row">
                         <div className="col-md-12">
-                            <div className="card" >
+                            <Card title="Login">
                                 {
-                                    this.state.apiResponse !== '' &&
+                                    this.state.apiResponse !== undefined &&
                                     <div className="alert alert-dismissible alert-danger">
                                         <button type="button" className="close" data-dismiss="alert">&times;</button>
                                         <strong>{this.state.apiResponse}</strong>
                                     </div>
                                 }
-                                <div className="card-header">
-                                    Login
-                                </div>
-                                <div className="card-body">
-                                    <form id="formLogin" onSubmit={this.executeLogin}>
-                                        <div className="row">
-                                            <div className="col-md-12">
-                                                <div className="form-group">
-                                                    <label>E-mail*</label>
-                                                    <input type="text" name="email" className="form-control" value={this.state.email} onChange={this.onChange} required></input> 
-                                                </div>
+                                <form id="formLogin" onSubmit={this.executeLogin}>
+                                    <div className="row">
+                                        <div className="col-md-12">
+                                            <div className="form-group">
+                                                <label>E-mail*</label>
+                                                <input type="text" name="email" className="form-control" value={this.state.email} onChange={this.onChange} required></input> 
                                             </div>
                                         </div>
-                                        <div className="row">
-                                            <div className="col-md-12">
-                                                <div className="form-group">
-                                                    <label>Senha*</label>
-                                                    <input type="password" name="password" className="form-control" value={this.state.password} onChange={this.onChange} required></input> 
-                                                </div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-md-12">
+                                            <div className="form-group">
+                                                <label>Senha*</label>
+                                                <input type="password" name="password" className="form-control" value={this.state.password} onChange={this.onChange} required></input> 
                                             </div>
                                         </div>
-                                        <div className="row">
-                                            <div className="col-md-1">
-                                                <button type="submit" className="btn btn-success">Logar</button>
-                                            </div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-md-1">
+                                            <button type="submit" className="btn btn-success">Logar</button>
                                         </div>
-                                    </form>
-                                </div>
-                            </div>
+                                    </div>
+                                </form>
+                            </Card>
                         </div>
                     </div>
                 </div>

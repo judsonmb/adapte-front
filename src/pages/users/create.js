@@ -1,5 +1,6 @@
-import React from "react";
+import React from 'react';
 import axios from 'axios';
+import Card from '../../components/defaultCard';
 
 
 class CreateUser extends React.Component{
@@ -82,7 +83,7 @@ class CreateUser extends React.Component{
 
     render(){
         return(
-            <div className="card">
+            <Card title='Cadastro de Usuário'>
                 {
                     this.state.apiResponse !== undefined && !this.state.apiResponse.success &&
                     <div className="alert alert-dismissible alert-danger">
@@ -97,50 +98,45 @@ class CreateUser extends React.Component{
                         <strong>{this.state.apiResponse.message}</strong>
                     </div>
                 }
-                <div className="card-header">
-                    Cadastro de Usuário
-                </div>
-                <div className="card-body">
-                    <form id="createUserForm" onSubmit={this.createUser}>
-                        <div className="row">
-                            <div className="col-md-6">
-                                <div className="form-group">
-                                    <label>Nome*</label>
-                                    <input type="text" name="name" className="form-control" value={this.state.name} onChange={this.onChange} required></input> 
-                                </div>
-                            </div>
-                            <div className="col-md-6">
-                                <div className="form-group">
-                                    <label>Email*</label>
-                                    <input type="email" name="email" className="form-control" value={this.state.email} onChange={this.onChange} required></input> 
-                                </div>
+                <form id="createUserForm" onSubmit={this.createUser}>
+                    <div className="row">
+                        <div className="col-md-6">
+                            <div className="form-group">
+                                <label>Nome*</label>
+                                <input type="text" name="name" className="form-control" value={this.state.name} onChange={this.onChange} required></input> 
                             </div>
                         </div>
-                        <div className="row">
-                            <div className="col-md-6">
-                                <div className="form-group">
-                                    <label>Senha*</label>
-                                    <input type="password" name="password" className="form-control" value={this.state.password} onChange={this.onChange} required></input> 
-                                </div>
-                            </div>
-                            <div className="col-md-6">
-                                <div className="form-group">
-                                    <label>Confirmar senha*</label>
-                                    <input type="password" name="c_password" className="form-control" value={this.state.c_password} onChange={this.onChange} required></input> 
-                                </div>
+                        <div className="col-md-6">
+                            <div className="form-group">
+                                <label>Email*</label>
+                                <input type="email" name="email" className="form-control" value={this.state.email} onChange={this.onChange} required></input> 
                             </div>
                         </div>
-                        <div className="row">
-                            <div className="col-md-1">
-                                <button type="submit" className="btn btn-success">Salvar</button>
-                            </div>
-                            <div className="col-md-1">
-                                <button className="btn btn-warning" onClick={this.clearFields}>Limpar</button> 
+                    </div>
+                    <div className="row">
+                        <div className="col-md-6">
+                            <div className="form-group">
+                                <label>Senha*</label>
+                                <input type="password" name="password" className="form-control" value={this.state.password} onChange={this.onChange} required></input> 
                             </div>
                         </div>
-                    </form>
-                </div>
-            </div>
+                        <div className="col-md-6">
+                            <div className="form-group">
+                                <label>Confirmar senha*</label>
+                                <input type="password" name="c_password" className="form-control" value={this.state.c_password} onChange={this.onChange} required></input> 
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-md-1">
+                            <button type="submit" className="btn btn-success">Salvar</button>
+                        </div>
+                        <div className="col-md-1">
+                            <button className="btn btn-warning" onClick={this.clearFields}>Limpar</button> 
+                        </div>
+                    </div>
+                </form>
+            </Card>
         )
     }
 

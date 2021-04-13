@@ -1,5 +1,6 @@
 import React from "react";
 import axios from 'axios';
+import Card from '../../components/defaultCard';
 
 
 class UpdateUser extends React.Component{
@@ -83,55 +84,41 @@ class UpdateUser extends React.Component{
     }
 
     render(){
-        if(this.state.apiResponse === undefined){
-            return(
-                <div>
-                    <div className="card">
-                        <div className="card-header">
-                            Usuários
-                        </div>   
+        return(
+            <Card title="Edição de Usuário">
+                { 
+                    this.state.apiResponse === undefined && <div className="spinner-border"></div> 
+                }
+                {
+                    this.state.errorMessage !== undefined &&
+                    <div className="alert alert-dismissible alert-danger">
+                        <button type="button" className="close" data-dismiss="alert">&times;</button>
+                        <strong>{this.state.errorMessage}</strong>
                     </div>
-                    <div className="card-body">
-                        <div className="spinner-border"></div>
-                    </div>
-                </div>
-            )
-        }else{
-            return(
-                <div className="card">
-                    {
-                        this.state.errorMessage !== undefined &&
-                        <div className="alert alert-dismissible alert-danger">
-                            <button type="button" className="close" data-dismiss="alert">&times;</button>
-                            <strong>{this.state.errorMessage}</strong>
+                }
+                { 
+                    this.state.apiResponse !== undefined &&
+                    <form id="updateUserForm" onSubmit={this.updateUser}>
+                        <div className="row">
+                            <div className="col-md-12">
+                                <div className="form-group">
+                                    <label>Nome*</label>
+                                    <input type="text" name="name" className="form-control" value={this.state.name} onChange={this.onChange} required></input> 
+                                </div>
+                            </div>
                         </div>
-                    }
-                    <div className="card-header">
-                        Edição do usuário {this.state.apiResponse.name}
-                    </div>
-                    <div className="card-body">
-                        <form id="updateUserForm" onSubmit={this.updateUser}>
-                            <div className="row">
-                                <div className="col-md-12">
-                                    <div className="form-group">
-                                        <label>Nome*</label>
-                                        <input type="text" name="name" className="form-control" value={this.state.name} onChange={this.onChange} required></input> 
-                                    </div>
-                                </div>
+                        <div className="row">
+                            <div className="col-md-1">
+                                <button type="submit" className="btn btn-success">Salvar</button>
                             </div>
-                            <div className="row">
-                                <div className="col-md-1">
-                                    <button type="submit" className="btn btn-success">Salvar</button>
-                                </div>
-                                <div className="col-md-1">
-                                    <button className="btn btn-warning" onClick={this.clearFields}>Limpar</button> 
-                                </div>
+                            <div className="col-md-1">
+                                <button className="btn btn-warning" onClick={this.clearFields}>Limpar</button> 
                             </div>
-                        </form>
-                    </div>
-                </div>
-            )
-        }
+                        </div>
+                    </form>
+                }
+            </Card>
+        )
     }
 }
 
