@@ -1,17 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import Card from '../../components/defaultCard';
 
 
-class UpdateUser extends React.Component{
+function UpdateUser(){
 
-    state = {
-        id: undefined,
-        name : '',
-        errorMessage: undefined,
-    }
+    const [ id, setId ] = useState(0)
+    const [ name, setName ] = useState('')
+    const [ apiResponse, setApiResponse] = useState('')
+    const [ errorMessage, setErrorMessage] = useState('')
 
-    componentDidMount(){
+    useEffect(() => {
 
         const headers = {
             'Accept': 'application/json',
@@ -24,29 +23,24 @@ class UpdateUser extends React.Component{
                 headers: headers
         })
         .then(res => {
-            this.setState({ apiResponse : res.data.data })
-            this.setState({ name: res.data.data.name})
+            setApiResponse(res.data.data)
+            setName(res.data.data.name)
 
         })
         .catch(err => {
-            if(err.this.state.apiUpdateResponse){
-                this.setState({ apiResponse : err.this.state.apiUpdateResponse.data })
+            if(err.apiUpdateResponse){
+                setApiResponse(err.apiUpdateResponse.data)
             }
         })
-    }
+    
+    }, [])
 
-    onChange = (event) => {
-        const value = event.target.value
-        const fieldName = event.target.name
-        this.setState({ [fieldName]: value })
-    }
-
-    updateUser = async (event) => {
+    const updateUser = async (event) => {
 
         event.preventDefault();
 
         const form = {
-            name: this.state.name,
+            name: name,
         }
         
         const headers = {
@@ -73,53 +67,49 @@ class UpdateUser extends React.Component{
                         message = err.response.data.message
                     }
                 }
-                this.setState({ errorMessage : message })
+                setErrorMessage(message)
             })
     }
 
-    clearFields = () => {
-        this.setState({ 
-            name: ''
-        })
+    const clearFields = () => {
+        setName('')
     }
 
-    render(){
-        return(
-            <Card title="Edição de Usuário">
-                { 
-                    this.state.apiResponse === undefined && <div className="spinner-border"></div> 
-                }
-                {
-                    this.state.errorMessage !== undefined &&
-                    <div className="alert alert-dismissible alert-danger">
-                        <button type="button" className="close" data-dismiss="alert">&times;</button>
-                        <strong>{this.state.errorMessage}</strong>
+    return(
+        <Card title="Edição de Usuário">
+            { 
+                apiResponse === '' && <div className="spinner-border"></div> 
+            }
+            {
+                errorMessage !== '' &&
+                <div className="alert alert-dismissible alert-danger">
+                    <button type="button" className="close" data-dismiss="alert">&times;</button>
+                    <strong>{errorMessage}</strong>
+                </div>
+            }
+            { 
+                apiResponse !== '' &&
+                <form id="updateUserForm" onSubmit={updateUser}>
+                    <div className="row">
+                        <div className="col-md-12">
+                            <div className="form-group">
+                                <label>Nome*</label>
+                                <input type="text" name="name" className="form-control" value={name} onChange={e => setName(e.target.value)} required></input> 
+                            </div>
+                        </div>
                     </div>
-                }
-                { 
-                    this.state.apiResponse !== undefined &&
-                    <form id="updateUserForm" onSubmit={this.updateUser}>
-                        <div className="row">
-                            <div className="col-md-12">
-                                <div className="form-group">
-                                    <label>Nome*</label>
-                                    <input type="text" name="name" className="form-control" value={this.state.name} onChange={this.onChange} required></input> 
-                                </div>
-                            </div>
+                    <div className="row">
+                        <div className="col-md-1">
+                            <button type="submit" className="btn btn-success">Salvar</button>
                         </div>
-                        <div className="row">
-                            <div className="col-md-1">
-                                <button type="submit" className="btn btn-success">Salvar</button>
-                            </div>
-                            <div className="col-md-1">
-                                <button className="btn btn-warning" onClick={this.clearFields}>Limpar</button> 
-                            </div>
+                        <div className="col-md-1">
+                            <button className="btn btn-warning" onClick={clearFields}>Limpar</button> 
                         </div>
-                    </form>
-                }
-            </Card>
-        )
-    }
+                    </div>
+                </form>
+            }
+        </Card>
+    )
 }
 
 export default UpdateUser
